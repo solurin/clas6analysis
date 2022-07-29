@@ -1,0 +1,113 @@
+//---- imports for HIPO4 library
+import org.jlab.jnp.hipo4.io.*;
+import org.jlab.jnp.hipo4.data.*;
+import org.jlab.clas.physics.*;
+import org.jlab.groot.data.*;
+import org.jlab.groot.graphics.*;
+import org.jlab.groot.math.*;
+import org.jlab.groot.ui.*;
+import java.util.Random;
+import javax.swing.JFrame;
+import org.jlab.groot.data.H1F;
+import org.jlab.groot.data.H2F;
+import org.jlab.groot.graphics.EmbeddedCanvas;
+
+
+ 
+// Create a HipoReader object and load in a file.  In this case, myInput.hipo is a placeholder that really does not exist.
+ 
+HipoReader reader = new HipoReader(); // Create a reader obejct
+reader.open("recsis2.hipo"); // open a file
+ 
+// Create an Event class and a bank instance, in this case for particle bank.
+// The event instance is used to read events from the file, and Bank instance is used to read particle bank from each event. 
+// NOTE ! the file must be opened first in order to initialize Bank object since it takes the schema for the bank from file dictionary.
+ 
+SchemaFactory factory = reader.getSchemaFactory();
+factory.show();
+ 
+Bank  particles = new Bank(factory.getSchema("EVENT::particle")); 
+Event     event = new Event();
+ 
+
+//H2F  hproton = new H2F("hproton" ,7,0, 7, 7, 0, 7);
+//H2F helectron = new H2F("helectron",7, 0, 7, 7, 0, 7);
+//H2F  hpiplus = new H2F("hpiplus" ,7, 0, 7, 7, 0, 7);
+//H2F hpiminus = new H2F("hpiminus",7, 0, 7, 7, 0, 7);
+//H2F  hgamma = new H2F("hgamma" ,7, 0, 7, 7, 0, 7);
+//H2F hkplus = new H2F("hkplus",7, 0, 7, 7, 0, 7);
+//H2F  hkminus = new H2F("hkminus" ,7, 0, 7, 7, 0, 7);
+//H2F hunknown = new H2F("hunknown",7, 0, 7, 7, 0, 7);
+
+//hproton.setTitleX("protons per event");
+//hproton.setTitleY("electrons per event");
+//helectron.setTitleX("electrons per event");
+//helectron.setTitleY("unknown per event");
+//hpiplus.setTitleX("piplus per event");
+//hpiplus.setTitleY("piminus per event");
+//hpiminus.setTitleX("piminus per event");
+//hpiminus.setTitleY("gamma per event");
+//hgamma.setTitleX("gammas per event");
+//hkplus.setTitleX("kpluses per event");
+//hkminus.setTitleX("kminuses per event");
+//hunknown.setTitleX("unknowns per event");
+
+//reader.getEvent(event,0);
+//while(reader.hasNext()==true){
+ //    reader.nextEvent(event);
+ //    event.read(particles);
+//      
+////     int protons = 0;
+//     int  electrons = 0;
+//     int piplus = 0;
+//     int piminus = 0;
+//     int gamma = 0;
+//     int kplus = 0;
+//     int kminus = 0;
+//     int unknown = 0;
+    // int negative_count = 0;
+        
+//	    hpiplus.fill(piplus, piminus);
+//	    hpiminus.fill(piminus, gamma);
+//	    hgamma.fill(gamma);
+//	    hkplus.fill(kplus);
+//	    hkminus.fill(kminus);
+//	    hunknown.fill(unknown);
+
+LorentzVector       vparticle = new LorentzVector();
+while(reader.hasNext()==true){
+ reader.nextEvent(event);
+ event.read(particles);
+ if(particles.getRows()>0){
+	for (int row=0; row<particles.getRows(); row++){
+        float beta = particles.getFloat("beta",row);
+        		 
+           vparticle.setPxPyPzM(
+           particles.getFloat("px",row), 
+           particles.getFloat("py",row),
+           particles.getFloat("pz",row),
+           particles.getFloat("mass",row)
+           );
+	hpiminus.fill(vparticle.p(), beta);
+// .p function 
+// change hW to electron, proton. etc
+           // if(charge<0) negative_count++;
+
+     }
+}
+// draw statement at end
+//Tcanvas 3x3
+//number of particles per event
+TCanvas ec = new TCanvas("ec",900,900);
+
+
+ec.divide(3,3);
+  
+ec.cd(0).draw(hproton);
+ec.cd(1).draw(helectron);
+ec.cd(2).draw(hpiplus);
+ec.cd(3).draw(hpiminus);
+ec.cd(4).draw(hgamma);
+ec.cd(5).draw(hkplus);
+ec.cd(6).draw(hkminus);
+ec.cd(7).draw(hunknown);
