@@ -15,3 +15,5 @@ creates H2F histogram comparing Q^2 vs W
 #betavsp*
 creates H2F histogram comparing beta vs momentum (p) for each particle type
 
+#ccinfo2*
+plots H1f (...)
