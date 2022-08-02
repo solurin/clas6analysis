@@ -7,3 +7,6 @@ counts numbers of each type of particle found in each event and prints to the sc
 #particlegraph*
 creates H1F histograms for each type of particle counting the number of events with 0,1,2,(and so on) counts of that particle
 
+#QW2D* 
+creates H2F histogram comparing Q^2 vs W 
+
