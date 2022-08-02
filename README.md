@@ -4,7 +4,7 @@ Java files to be run in jshell to analyze and plot histograms of clas6 simulatio
 ***all files are meant for clas6 analysis unless they have "c12", "CLAS12" etc. in their file name***
 
 #particlecount*
-counts numbers of each type of particle found in each event and prints to the screen (
+counts numbers of each type of particle found in each event and prints to the screen 
 
 #particlegraph*
 creates H1F histograms for each type of particle counting the number of events with 0,1,2,(and so on) counts of that particle 
