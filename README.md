@@ -15,5 +15,7 @@ creates H2F histogram comparing Q^2 vs W
 #betavsp*
 creates H2F histogram comparing beta vs momentum (p) for each particle type
 
-#ccinfo2*
-plots H1f (...)
+#ccinfo3*
+plots H1f histograms of total and cut photoelectron counts and an additional graph which overlays them onto each other
+
+
