@@ -1,7 +1,7 @@
 # clas6analysis
 Java files to be run in jshell to analyze and plot histograms of clas6 simulation data (Summer 2022)
 
-***all files are made for clas6 simulation unless they have "c12", "CLAS12" etc. in their file name***
+***all files are meant for clas6 analysis unless they have "c12", "CLAS12" etc. in their file name***
 
 #particlecount*
 counts numbers of each type of particle found in each event and prints to the screen (
