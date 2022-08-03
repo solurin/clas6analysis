@@ -25,7 +25,7 @@ creates 3 canvases:
       c. H2F histograms for dBeta (BetaBank - BetaCalculated) vs p for each particle
 
 6. ccinfo3*
-plots H1f histograms of total and cut photoelectron counts and an additional graph which overlays them onto each other
+plots H1F histograms of total and cut photoelectron counts and an additional graph which overlays them onto each other
 
 7. ccinfo5*
 adds onto ccinfo3 with plots of EC in vs EC out and P vs (ECtotal / P) along with cut versions
