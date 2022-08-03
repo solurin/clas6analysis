@@ -28,4 +28,7 @@ creates 3 canvases:
 plots H1f histograms of total and cut photoelectron counts and an additional graph which overlays them onto each other
 
 7. ccinfo5*
-adds plots of EC in vs EC out and P vs (ECtotal * P) including cut versions
+adds onto ccinfo3 with plots of EC in vs EC out and P vs (ECtotal / P) along with cut versions
+
+8. ccinfo6*
+adds onto ccinfo5 with plot of P vs ECtotal along with a cut version 
