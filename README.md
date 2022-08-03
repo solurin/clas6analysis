@@ -32,3 +32,6 @@ adds onto ccinfo3 with plots of EC in vs EC out and P vs (ECtotal / P) along wit
 
 8. ccinfo6*
 adds onto ccinfo5 with plot of P vs ECtotal along with a cut version 
+
+9. QWtp*
+plots theta vs phi along with q^2 and w
