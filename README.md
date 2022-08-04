@@ -37,10 +37,10 @@ adds onto ccinfo5 with plot of P vs ECtotal along with a cut version
 plots theta, phi, q^2, and w
 
 10. tp2D.java
-plots an H2F theta vs phi (electron)
+plots an H2F theta vs phi (electrons)
 
 11. c12tp2D.java
-plots an H2F theta vs phi for clas12 (electron)
+plots an H2F theta vs phi for clas12 (electrons)
 
-12. c12tp2DProton
-plots an H2F theta vs phi for clas12 (proton)
+12. c12tp2DProton.java
+plots an H2F theta vs phi for clas12 (protons)
