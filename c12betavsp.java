@@ -55,8 +55,13 @@ H2F hdbetapiminus = new H2F("hdbetapiminus", 100, 0, 1, 100, -1, 1);
 H2F hdbetakplus = new H2F("hdbetakplus", 100, 0, 1, 100, -1, 1);
 H2F hdbetakminus = new H2F("hdbetakminus", 100, 0, 1, 100, -1, 1);
 H2F hdbetagamma = new H2F("hdbetagamma", 100, 0, 1, 100, -1, 1);
-H2F hdbetaunknown = new H2F("hdbetaunknown", 100, 0, 1, 100, -1, 1)
-
+H2F hdbetaunknown = new H2F("hdbetaunknown", 100, 0, 1, 100, -1, 1);
+H2F hnu = new H2F("hnu", 100, 0, 10, 100, 0, 20);
+H2F hy = new H2F("hy", 100, 0, 10, 100, 0, 1);
+H2F hxb = new H2F("hxb", 100, 0, 10, 100, -2, 2);
+H2F hxbW = new H2F("hxbW", 100, 0, 1, 100, 4, 6);
+//H2F hy2 = new H2F("hy2", 100, 0, 1, 100, -10000, 10000);
+//H2F hxb2 = new H2F("hxb2", 100, 0, 1, 100, -10000, 10000);
 
 
 H1F hmsquarede = new H1F("hmsquarede",100, -0.001, 0.003);
@@ -68,8 +73,10 @@ H1F hmsquaredkminus = new H1F("hmsquaredkminus",100, -0.1, 1.5);
 H1F hmsquaredunknown = new H1F("hmsquaredunknown",100, -0.1, 1.5);
 H1F hmsquaredpositive = new H1F("hmsquaredpositive",100, -0.1, 1.5);
 H1F hmsquarednegative = new H1F("hmsquarednegative",100, -0.1, 1.5);
-
-
+H1F hnu1 = new H1F("hnu1",100, 0, 10);
+H1F hy1 = new H1F("hy1",100, 0, 1);
+H1F hxb1 = new H1F("hxb1",100, 0, 0.1);
+H1F hcostheta = new H1F("hcostheta",100, 0, 1);
 
 hproton.setTitleX("beta vs p: proton");
 helectron.setTitleX("beta vs p: electron");
@@ -96,20 +103,27 @@ hdbetakplus.setTitleX("p vs dbeta (kplus)");
 hdbetakminus.setTitleX("p vs dbeta (kminus)");
 hdbetagamma.setTitleX("p vs dbeta (gamma)");
 hdbetaunknown.setTitleX("p vs dbeta (unknown)");
+hnu.setTitleX("E beam minus E measured vs p");
+hy.setTitleX("nu / beam energy vs p");
+hxb.setTitleX("(Q2 / 2*nu*Mp) vs p");
+hnu1.setTitleX("e beam - e measured");
+hy1.setTitleX("nu vs e beam");
+hxb1.setTitleX("Q2 vs 2*nu*Mp");
+hxbW.setTitleX("xb vs W");
+hcostheta.setTitleX("cos theta");
+
+
+LorentzVector   vparticle = new LorentzVector();
+LorentzVector  vBeam   = new LorentzVector(0.0,0.0,10.6,10.6);
+LorentzVector      vQ2 = new LorentzVector();
+LorentzVector  vTarget = new LorentzVector(0.0,0.0,0.0,0.938);
+LorentzVector electron = new LorentzVector(); 
+LorentzVector proton   = new LorentzVector();
+LorentzVector       vW = new LorentzVector();
+LorentzVector vVirtPhoton = new LorentzVector();
 
 
 
-
-
-
-LorentzVector       vparticle = new LorentzVector();
-//		LorentzVector	    velectrons = new LorentzVector();
-//		LorentzVector	    vpiplus = new LorentzVector();
-//		LorentzVector	    vpiminus = new LorentzVector();
-//		LorentzVector	    vgamma = new LorentzVector();
-//		LorentzVector	    vkplus = new LorentzVector();
-//		LorentzVector	    vkminus = new LorentzVector();
-//		LorentzVector	    vunknown = new LorentzVector( 
 double mass = 0.0;
 double beta = 0.0;
 reader.getEvent(event,0);
@@ -163,8 +177,39 @@ while(reader.hasNext()==true){
 	 if(pid==321) hdbetakminus.fill(vparticle.p(), dbeta);
 	 if(pid==22) hdbetagamma.fill(vparticle.p(), dbeta);
 	 if(pid==0) hdbetaunknown.fill(vparticle.p(), dbeta);          
-          
-
+         if(pid==11){
+		double nu = vBeam.e() - vparticle.e();
+		double y = nu / vBeam.e();
+		double xb = -vQ2.mass2() / (2*nu*.938);
+		hnu.fill(vparticle.p(), nu);
+          	hy.fill(vparticle.p(), y);
+		vW.sub(vparticle);
+		vVirtPhoton.sub(vparticle);
+		hxb.fill(vparticle.p(), xb);
+         	hnu1.fill(nu);
+         	hy1.fill(y);
+         	hxb1.fill(xb);
+         	hxbW.fill(xb, vW.mass());
+	 }
+	 vQ2.copy(vBeam);
+	 vQ2.sub(vparticle);
+	 vW.copy(vBeam);
+         vW.add(vTarget);
+	 vVirtPhoton.copy(vBeam);
+	 if(pid==2212){
+		double dotprod = vVirtPhoton.vect().dot(vparticle.vect());
+		double magn = vparticle.vect().mag() * vVirtPhoton.vect().mag();
+		double costheta = dotprod / magn;
+		double costheta2 = Math.cos(Math.toRadians(vVirtPhoton.vect().theta(vparticle.vect())));
+		hcostheta.fill(costheta); 
+//		double costhetameasured = 
+//		System.out.println(vVirtPhoton.vect().theta(vparticle.vect()));
+//		System.out.println(costheta);
+//		System.out.println((vVirtPhoton.vect().theta(vparticle.vect())) / costheta);
+//		System.out.println(costheta2 / costheta);
+	 }
+//	 if(pid==11) hy2.fill(nu, vBeam.e());
+//	 if(pid==11) hxb2.fill(vQ2.mass(), (2*nu*mass));	
 // change hW to electron, proton. etc
            // if(charge<0) negative_count++;
 
@@ -221,6 +266,19 @@ ec3.cd(4).draw(hdbetakplus);
 ec3.cd(5).draw(hdbetakminus);
 ec3.cd(6).draw(hdbetagamma);
 ec3.cd(7).draw(hdbetaunknown);
+ 
+TCanvas ec4 = new TCanvas("ec4",900,900);
 
+ec4.divide(3,3);
 
+ec4.cd(0).draw(hnu);
+ec4.cd(1).draw(hy);
+ec4.cd(2).draw(hxb);
+ec4.cd(3).draw(hnu1);
+ec4.cd(4).draw(hy1);
+ec4.cd(5).draw(hxb1);
+ec4.cd(6).draw(hxbW);
+ec4.cd(7).draw(hcostheta);
+//ec4.cd(3).draw(hy2);
+//ec4.cd(4).draw(hxb2);
 
