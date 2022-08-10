@@ -16,13 +16,15 @@ creates H2F histogram comparing Q^2 vs W
 creates H2F histograms comparing beta vs momentum (p) for each particle type
 
 5. c12betavsp* (CLAS12)
-creates 3 canvases:
+creates 4 canvases:
 
       a. H2F beta vs p historgrams similar to betavsp for clas6
   
       b. H1F historgrams for the measured mass squared values for each particle
   
       c. H2F histograms for dBeta (BetaBank - BetaCalculated) vs p for each particle
+      
+      d. assorted histograms for nu, xb, and theta pq
 
 6. ccinfo3*
 plots H1F histograms of total and cut photoelectron counts and an additional graph which overlays them onto each other
