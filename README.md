@@ -46,3 +46,6 @@ plots an H2F theta vs phi for clas12 (electrons)
 
 12. c12tp2DProton.java
 plots an H2F theta vs phi for clas12 (protons)
+
+13. MCanalysis.java
+plots data from the MC::Particle bank, such as electron and proton momentum and theta, while also creating histograms to compare this data to that of the REC Particle bank
